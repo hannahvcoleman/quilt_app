@@ -1,0 +1,159 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+
+type Props = CollectionEntry<'posts'>['data'] & { readingTime: number };
+
+const { title, description, pubDate, coverImage, readingTime } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} image={coverImage} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			{coverImage && (
+				<div class="cover-image">
+					<img src={coverImage} alt={title} />
+				</div>
+			)}
+
+			<article>
+				<header class="post-header">
+					<div class="post-meta">
+						<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+						<span class="separator">·</span>
+						<span>{readingTime} min read</span>
+					</div>
+					<h1>{title}</h1>
+					<p class="description">{description}</p>
+					<hr />
+				</header>
+
+				<div class="prose">
+					<slot />
+				</div>
+			</article>
+
+			<SubscribeForm />
+
+			<div class="back-link">
+				<a href={import.meta.env.BASE_URL}>&larr; All posts</a>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: var(--wide-width);
+		max-width: calc(100% - clamp(2rem, 8vw, 6rem));
+		margin: 0 auto;
+		padding: 2rem 0 var(--space-xl);
+	}
+
+	.cover-image {
+		width: 100%;
+		margin: 0 0 var(--space-xl);
+	}
+
+	.cover-image img {
+		width: 100%;
+		max-height: 560px;
+		object-fit: cover;
+		border-radius: 10px;
+		box-shadow: var(--box-shadow);
+		display: block;
+	}
+
+	article {
+		max-width: var(--content-width);
+		margin: 0 auto;
+	}
+
+	.post-header {
+		margin-bottom: var(--space-xl);
+	}
+
+	.post-meta {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-sm);
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.separator {
+		opacity: 0.4;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		line-height: 1.1;
+		margin: var(--space-sm) 0;
+	}
+
+	.description {
+		font-size: 1.1rem;
+		color: var(--color-text-muted);
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	hr {
+		margin: var(--space-lg) 0;
+	}
+
+	/* Images in prose break out wider than text */
+	.prose :global(img) {
+		max-width: var(--wide-width);
+		width: calc(100% + clamp(2rem, 8vw, 6rem) * 2);
+		margin-left: calc(-1 * clamp(2rem, 8vw, 6rem));
+		border-radius: 8px;
+		box-shadow: var(--box-shadow);
+	}
+
+	.back-link {
+		max-width: var(--content-width);
+		margin: var(--space-xl) auto 0;
+		font-family: var(--font-ui);
+		font-size: 0.9rem;
+	}
+
+	.back-link a {
+		color: var(--color-text-muted);
+	}
+
+	.back-link a:hover {
+		color: var(--color-accent);
+	}
+
+	@media (max-width: 860px) {
+		h1 { font-size: 2rem; }
+
+		.prose :global(img) {
+			width: 100%;
+			margin-left: 0;
+		}
+	}
+
+	@media (max-width: 600px) {
+		h1 { font-size: 1.75rem; }
+	}
+</style>

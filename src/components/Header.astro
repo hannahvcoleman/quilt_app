@@ -1,0 +1,65 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+	<nav>
+		<a href={import.meta.env.BASE_URL} class="site-title">{SITE_TITLE}</a>
+		<div class="nav-links">
+			<a href={import.meta.env.BASE_URL}>Posts</a>
+			<a href={`${import.meta.env.BASE_URL}subscribe`}>Subscribe</a>
+		</div>
+	</nav>
+</header>
+
+<style>
+	header {
+		background: var(--color-surface);
+		border-bottom: 1px solid var(--color-border);
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: 0 var(--space-md);
+		height: 3.5rem;
+	}
+
+	.site-title {
+		font-family: var(--font-ui);
+		font-weight: 600;
+		font-size: 1rem;
+		color: var(--color-text);
+		text-decoration: none;
+		letter-spacing: -0.01em;
+	}
+
+	.site-title:hover {
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	.nav-links {
+		display: flex;
+		gap: var(--space-lg);
+	}
+
+	.nav-links a {
+		font-family: var(--font-ui);
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--color-text-muted);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+
+	.nav-links a:hover {
+		color: var(--color-accent);
+	}
+</style>

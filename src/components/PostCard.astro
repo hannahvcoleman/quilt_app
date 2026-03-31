@@ -1,0 +1,115 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	slug: string;
+	coverImage?: string;
+	tags?: string[];
+}
+
+const { title, description, pubDate, slug, coverImage, tags } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<article class="post-card">
+	<a href={`${import.meta.env.BASE_URL}posts/${slug}`} class="card-link">
+		{coverImage && (
+			<div class="card-image">
+				<img src={coverImage} alt={title} loading="lazy" />
+			</div>
+		)}
+		<div class="card-body">
+			<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+			<h2>{title}</h2>
+			<p class="description">{description}</p>
+			{tags && tags.length > 0 && (
+				<ul class="tags">
+					{tags.map((tag) => <li>{tag}</li>)}
+				</ul>
+			)}
+		</div>
+	</a>
+</article>
+
+<style>
+	.post-card {
+		border: 1px solid var(--color-border);
+		border-radius: 10px;
+		background: var(--color-surface);
+		overflow: hidden;
+		transition: border-color 0.15s, box-shadow 0.15s;
+	}
+
+	.post-card:hover {
+		border-color: var(--color-accent);
+		box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+	}
+
+	.card-link {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.card-image img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		border-radius: 0;
+		display: block;
+	}
+
+	.card-body {
+		padding: var(--space-lg);
+	}
+
+	time {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	h2 {
+		font-size: 1.25rem;
+		margin: var(--space-xs) 0 var(--space-sm) 0;
+		color: var(--color-text);
+	}
+
+	.card-link:hover h2 {
+		color: var(--color-accent);
+	}
+
+	.description {
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		margin: 0 0 var(--space-sm) 0;
+		line-height: 1.6;
+	}
+
+	.tags {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+
+	.tags li {
+		font-family: var(--font-ui);
+		font-size: 0.75rem;
+		background: var(--color-bg);
+		color: var(--color-text-muted);
+		border: 1px solid var(--color-border);
+		border-radius: 4px;
+		padding: 0.15em 0.5em;
+	}
+</style>

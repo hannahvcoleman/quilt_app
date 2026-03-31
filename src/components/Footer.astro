@@ -1,0 +1,57 @@
+---
+import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	<div class="footer-inner">
+		<p class="copyright">
+			&copy; {today.getFullYear()} {SITE_AUTHOR}. All rights reserved.
+		</p>
+		<p class="built-with">
+			Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+		</p>
+	</div>
+</footer>
+
+<style>
+	footer {
+		border-top: 1px solid var(--color-border);
+		background: var(--color-surface);
+		margin-top: var(--space-xl);
+	}
+
+	.footer-inner {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--space-lg) var(--space-md);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+	}
+
+	p {
+		margin: 0;
+		font-family: var(--font-ui);
+		font-size: 0.875rem;
+		color: var(--color-text-muted);
+	}
+
+	a {
+		color: var(--color-text-muted);
+	}
+
+	a:hover {
+		color: var(--color-accent);
+	}
+
+	@media (max-width: 600px) {
+		.footer-inner {
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+		}
+	}
+</style>

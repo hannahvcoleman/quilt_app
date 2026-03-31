@@ -1,0 +1,43 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Subscribe — ${SITE_TITLE}`}
+			description="Get new posts delivered to your inbox."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Subscribe</h1>
+			<p>Enter your email below to get new posts delivered straight to your inbox. No spam, ever — just writing.</p>
+			<SubscribeForm />
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: var(--content-width);
+		max-width: calc(100% - 2rem);
+		margin: 0 auto;
+		padding: var(--space-xl) var(--space-md);
+	}
+
+	h1 {
+		margin-bottom: var(--space-sm);
+	}
+
+	p {
+		color: var(--color-text-muted);
+		font-size: 1.05rem;
+	}
+</style>

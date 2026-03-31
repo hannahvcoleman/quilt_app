@@ -1,0 +1,174 @@
+---
+// Paste your Google Apps Script deployment URL here after setup (see README for instructions)
+const SUBSCRIBE_URL = "https://script.google.com/macros/s/AKfycbyOrqFrSD0o9sFmC1zxA1CznsqKvb8G6NT0XsJTXVNNNgqcXkiBOKGM985xTU3orGNY/exec";
+---
+
+<div class="subscribe-block">
+	<div class="subscribe-inner">
+		<h3>Stay in the loop</h3>
+		<p>New posts delivered straight to your inbox. No spam, ever.</p>
+		<form class="subscribe-form" id="subscribe-form" novalidate>
+			<div class="form-row">
+				<input
+					type="email"
+					id="email-input"
+					name="email"
+					placeholder="you@example.com"
+					required
+					autocomplete="email"
+					aria-label="Email address"
+				/>
+				<button type="submit" id="submit-btn">Subscribe</button>
+			</div>
+			<p class="form-message" id="form-message" aria-live="polite"></p>
+		</form>
+	</div>
+</div>
+
+<script define:vars={{ SUBSCRIBE_URL }}>
+	const form = document.getElementById('subscribe-form');
+	const message = document.getElementById('form-message');
+	const submitBtn = document.getElementById('submit-btn');
+	const emailInput = document.getElementById('email-input');
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+
+		const email = emailInput.value.trim();
+		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+		if (!emailPattern.test(email)) {
+			message.textContent = 'Please enter a valid email address.';
+			message.className = 'form-message error';
+			return;
+		}
+
+		submitBtn.disabled = true;
+		submitBtn.textContent = 'Subscribing...';
+		message.textContent = '';
+		message.className = 'form-message';
+
+		if (SUBSCRIBE_URL === 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+			message.textContent = 'Subscribe URL not configured yet — see README for setup instructions.';
+			message.className = 'form-message error';
+			submitBtn.disabled = false;
+			submitBtn.textContent = 'Subscribe';
+			return;
+		}
+
+		try {
+			await fetch(SUBSCRIBE_URL, {
+				method: 'POST',
+				mode: 'no-cors',
+				headers: { 'Content-Type': 'text/plain' },
+				body: JSON.stringify({ email }),
+			});
+
+			// no-cors returns an opaque response we can't inspect — if fetch
+			// didn't throw, the request reached the script successfully
+			message.textContent = "You're subscribed! Thanks for joining.";
+			message.className = 'form-message success';
+			form.reset();
+		} catch {
+			message.textContent = 'Something went wrong. Please try again.';
+			message.className = 'form-message error';
+		} finally {
+			submitBtn.disabled = false;
+			submitBtn.textContent = 'Subscribe';
+		}
+	});
+</script>
+
+<style>
+	.subscribe-block {
+		margin: var(--space-xl) 0;
+		padding: var(--space-xl) var(--space-lg);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		text-align: center;
+	}
+
+	.subscribe-inner {
+		max-width: 480px;
+		margin: 0 auto;
+	}
+
+	h3 {
+		font-family: var(--font-ui);
+		font-size: 1.25rem;
+		margin: 0 0 var(--space-sm) 0;
+		color: var(--color-text);
+	}
+
+	p {
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		margin: 0 0 var(--space-lg) 0;
+	}
+
+	.form-row {
+		display: flex;
+		gap: var(--space-sm);
+	}
+
+	input[type="email"] {
+		flex: 1;
+		padding: 0.6rem 0.875rem;
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		background: var(--color-bg);
+		color: var(--color-text);
+		font-family: var(--font-ui);
+		font-size: 0.9375rem;
+		outline: none;
+		transition: border-color 0.15s;
+	}
+
+	input[type="email"]:focus {
+		border-color: var(--color-accent);
+	}
+
+	button {
+		padding: 0.6rem 1.25rem;
+		background: var(--color-accent);
+		color: #fff;
+		border: none;
+		border-radius: 6px;
+		font-family: var(--font-ui);
+		font-size: 0.9375rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background 0.15s;
+		white-space: nowrap;
+	}
+
+	button:hover:not(:disabled) {
+		background: var(--color-accent-hover);
+	}
+
+	button:disabled {
+		opacity: 0.65;
+		cursor: not-allowed;
+	}
+
+	.form-message {
+		margin: var(--space-sm) 0 0 0;
+		font-family: var(--font-ui);
+		font-size: 0.875rem;
+		min-height: 1.25em;
+	}
+
+	.form-message.success { color: #15803d; }
+	.form-message.error { color: #b91c1c; }
+
+	@media (max-width: 480px) {
+		.form-row {
+			flex-direction: column;
+		}
+
+		button {
+			width: 100%;
+		}
+	}
+</style>
