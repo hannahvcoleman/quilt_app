@@ -21,7 +21,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 	<a href={`${import.meta.env.BASE_URL}posts/${slug}`} class="card-link">
 		{coverImage && (
 			<div class="card-image">
-				<img src={coverImage} alt={title} loading="lazy" />
+				<img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${coverImage}`} alt={title} loading="lazy" />
 			</div>
 		)}
 		<div class="card-body">
