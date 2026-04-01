@@ -1,0 +1,2 @@
+- [Keystatic Astro 6 blank page fix](keystatic_astro6_blank_page.md) — React renderer not in server manifest; fixed with project-owned wrapper component
+- [Project CMS configuration](project_cms_config.md) — posts collection, GitHub mode, repo hannahvcoleman/quilt_app, Vercel deployment
