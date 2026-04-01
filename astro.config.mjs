@@ -8,7 +8,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
 	output: 'static',
-	site: 'https://your-site.vercel.app', // update after first Vercel deploy
+	site: 'https://quillt-delta.vercel.app',
 	integrations: [mdx(), sitemap(), react(), keystatic()],
 	adapter: vercel(),
 });
