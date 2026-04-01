@@ -59,9 +59,9 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 <style>
 	main {
 		width: var(--wide-width);
-		max-width: calc(100% - clamp(2rem, 8vw, 6rem));
+		max-width: calc(100% - clamp(2rem, 4vw, 3rem) * 2);
 		margin: 0 auto;
-		padding: 2rem 0 var(--space-xl);
+		padding: 2rem clamp(1rem, 4vw, 3rem) var(--space-xl);
 	}
 
 	.cover-image {
@@ -71,9 +71,9 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 	.cover-image img {
 		width: 100%;
-		max-height: 560px;
+		max-height: 65vh;
 		object-fit: cover;
-		border-radius: 10px;
+		border-radius: 0;
 		box-shadow: var(--box-shadow);
 		display: block;
 	}
@@ -126,9 +126,9 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 	/* Images in prose break out wider than text */
 	.prose :global(img) {
 		max-width: var(--wide-width);
-		width: calc(100% + clamp(2rem, 8vw, 6rem) * 2);
-		margin-left: calc(-1 * clamp(2rem, 8vw, 6rem));
-		border-radius: 8px;
+		width: calc(100% + clamp(1rem, 4vw, 3rem) * 2);
+		margin-left: calc(-1 * clamp(1rem, 4vw, 3rem));
+		border-radius: 0;
 		box-shadow: var(--box-shadow);
 	}
 
@@ -153,6 +153,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		.prose :global(img) {
 			width: 100%;
 			margin-left: 0;
+			margin-right: 0;
 		}
 	}
 
