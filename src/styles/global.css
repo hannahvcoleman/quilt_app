@@ -22,6 +22,14 @@
 	--space-lg: 2rem;
 	--space-xl: 4rem;
 
+	/* Status colours */
+	--color-success: #15803d;
+	--color-error: #b91c1c;
+
+	/* Code block colours */
+	--color-code-bg: #1c1917;
+	--color-code-text: #e7e5e4;
+
 	/* legacy vars for compatibility */
 	--box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
 }
@@ -122,10 +130,12 @@ img {
 
 .prose blockquote {
 	border-left: 3px solid var(--color-accent);
-	margin: 1.5em 0;
+	margin: 1.75em 0;
 	padding: 0.5em 0 0.5em 1.25em;
 	color: var(--color-text-muted);
 	font-style: italic;
+	font-size: 1.15em;
+	line-height: 1.65;
 }
 
 .prose blockquote p {
@@ -153,8 +163,8 @@ img {
 }
 
 .prose pre {
-	background: #1c1917;
-	color: #e7e5e4;
+	background: var(--color-code-bg);
+	color: var(--color-code-text);
 	padding: 1.25em 1.5em;
 	border-radius: 8px;
 	overflow-x: auto;
@@ -176,8 +186,8 @@ code {
 }
 
 pre {
-	background: #1c1917;
-	color: #e7e5e4;
+	background: var(--color-code-bg);
+	color: var(--color-code-text);
 	padding: 1.25em 1.5em;
 	border-radius: 8px;
 	overflow-x: auto;
@@ -198,9 +208,14 @@ table {
 	border-collapse: collapse;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
+	body { font-size: 18px; }
+	main { padding: var(--space-lg) 1.25rem; }
+}
+
+@media (max-width: 600px) {
 	body { font-size: 17px; }
-	main { padding: var(--space-lg) var(--space-md); }
+	main { padding: var(--space-md) 1rem; }
 	h1 { font-size: 1.9rem; }
 }
 

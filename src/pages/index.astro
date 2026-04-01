@@ -5,12 +5,23 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import PostCard from '../components/PostCard.astro';
 import SubscribeForm from '../components/SubscribeForm.astro';
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const allPosts = await getCollection('posts');
 const posts = allPosts
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featured = posts[0];
+const gridPosts = posts.slice(1);
+
+const featuredDate = featured
+	? featured.data.pubDate.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+	  })
+	: null;
 ---
 
 <html lang="en">
@@ -20,26 +31,60 @@ const posts = allPosts
 	<body>
 		<Header />
 		<main>
-			<div class="hero">
-				<h1>{SITE_TITLE}</h1>
-				<p class="bio">{SITE_DESCRIPTION}</p>
-			</div>
-
 			{posts.length === 0 ? (
 				<p class="empty">No posts yet. Check back soon.</p>
 			) : (
-				<div class="post-grid">
-					{posts.map((post) => (
-						<PostCard
-							title={post.data.title}
-							description={post.data.description}
-							pubDate={post.data.pubDate}
-							slug={post.id}
-							coverImage={post.data.coverImage}
-							tags={post.data.tags}
-						/>
-					))}
-				</div>
+				<>
+					<!-- Featured / hero post -->
+					<section class="featured-post">
+						<a href={`${import.meta.env.BASE_URL}posts/${featured.id}`} class="featured-link">
+							{featured.data.coverImage ? (
+								<div class="featured-image">
+									<img
+										src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${featured.data.coverImage}`}
+										alt={featured.data.title}
+										loading="eager"
+									/>
+								</div>
+							) : (
+								<div class="featured-image featured-image--no-cover" />
+							)}
+							<div class="featured-body">
+								<div class="featured-meta">
+									<time datetime={featured.data.pubDate.toISOString()}>{featuredDate}</time>
+									{featured.data.tags && featured.data.tags.length > 0 && (
+										<>
+											<span class="sep">·</span>
+											<span class="featured-tag">{featured.data.tags[0]}</span>
+										</>
+									)}
+								</div>
+								<h2 class="featured-title">{featured.data.title}</h2>
+								{featured.data.description && (
+									<p class="featured-excerpt">{featured.data.description}</p>
+								)}
+							</div>
+						</a>
+					</section>
+
+					<!-- Grid of remaining posts -->
+					{gridPosts.length > 0 && (
+						<section class="grid-section">
+							<div class="post-grid">
+								{gridPosts.map((post) => (
+									<PostCard
+										title={post.data.title}
+										description={post.data.description}
+										pubDate={post.data.pubDate}
+										slug={post.id}
+										coverImage={post.data.coverImage}
+										tags={post.data.tags}
+									/>
+								))}
+							</div>
+						</section>
+					)}
+				</>
 			)}
 
 			<SubscribeForm />
@@ -56,29 +101,129 @@ const posts = allPosts
 		padding: var(--space-xl) clamp(1rem, 4vw, 3rem);
 	}
 
-	.hero {
+	/* ── Featured hero ─────────────────────────────────── */
+	.featured-post {
 		margin-bottom: var(--space-xl);
 	}
 
-	h1 {
-		font-size: 2rem;
-		margin: 0 0 var(--space-sm) 0;
+	.featured-link {
+		display: block;
+		text-decoration: none;
+		color: inherit;
 	}
 
-	.bio {
-		font-size: 1.05rem;
+	.featured-image {
+		width: 100%;
+		height: clamp(280px, 52vh, 600px);
+		overflow: hidden;
+		background: var(--color-border);
+	}
+
+	.featured-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		border-radius: 0;
+		transition: transform 0.4s ease;
+	}
+
+	.featured-link:hover .featured-image img {
+		transform: scale(1.02);
+	}
+
+	.featured-image--no-cover {
+		display: none;
+	}
+
+	.featured-body {
+		padding: var(--space-lg) 0 0;
+	}
+
+	.featured-meta {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
 		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		margin-bottom: var(--space-sm);
+	}
+
+	.sep {
+		opacity: 0.4;
+	}
+
+	.featured-tag {
+		color: var(--color-accent);
+	}
+
+	.featured-title {
+		font-family: var(--font-display);
+		font-size: clamp(2rem, 4vw, 3.25rem);
+		font-weight: 900;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+		color: var(--color-text);
+		margin: 0 0 var(--space-sm) 0;
+		max-width: 820px;
+		transition: color 0.15s;
+	}
+
+	.featured-link:hover .featured-title {
+		color: var(--color-accent);
+	}
+
+	.featured-excerpt {
+		font-size: 1.1rem;
+		color: var(--color-text-muted);
+		line-height: 1.65;
 		margin: 0;
+		max-width: 680px;
+	}
+
+	/* ── Grid section ───────────────────────────────────── */
+	.grid-section {
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-xl);
+		margin-bottom: var(--space-xl);
 	}
 
 	.post-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+		grid-template-columns: repeat(2, 1fr);
 		gap: var(--space-lg);
 	}
 
 	.empty {
 		color: var(--color-text-muted);
 		font-style: italic;
+	}
+
+	/* ── Responsive ─────────────────────────────────────── */
+	@media (max-width: 860px) {
+		.post-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.featured-image {
+			height: clamp(220px, 48vh, 420px);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.featured-image {
+			height: 40vh;
+		}
+
+		.featured-title {
+			font-size: 1.75rem;
+		}
+
+		.featured-excerpt {
+			font-size: 1rem;
+		}
 	}
 </style>

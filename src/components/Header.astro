@@ -6,7 +6,7 @@ import { SITE_TITLE } from '../consts';
 	<nav>
 		<a href={import.meta.env.BASE_URL} class="site-title">{SITE_TITLE}</a>
 		<div class="nav-links">
-			<a href={import.meta.env.BASE_URL}>Posts</a>
+			<a href={import.meta.env.BASE_URL} class="nav-posts">Posts</a>
 			<a href={`${import.meta.env.BASE_URL}subscribe`}>Subscribe</a>
 		</div>
 	</nav>
@@ -62,5 +62,16 @@ import { SITE_TITLE } from '../consts';
 
 	.nav-links a:hover {
 		color: var(--color-accent);
+	}
+
+	/* Mobile: hide Posts link — the logo already links home */
+	@media (max-width: 600px) {
+		.nav-posts {
+			display: none;
+		}
+
+		nav {
+			padding: 0 1rem;
+		}
 	}
 </style>
