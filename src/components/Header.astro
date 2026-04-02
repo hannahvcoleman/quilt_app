@@ -28,7 +28,7 @@ import { SITE_TITLE } from '../consts';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 20px 60px;
+		padding: 40px 60px;
 	}
 
 	/* ── Masthead ────────────────────────────────────────────────── */
@@ -45,10 +45,10 @@ import { SITE_TITLE } from '../consts';
 	.masthead-wordmark {
 		display: block;
 		font-family: var(--font-masthead);
-		font-size: clamp(2.5rem, 5vw, 4.5rem);
+		font-size: clamp(8rem, 12vw, 12rem);
 		font-weight: 400; /* Archivo Black is always 900 — weight: 400 selects the Black face */
-		letter-spacing: -3px;
-		line-height: 0.9;
+		letter-spacing: -6px;
+		line-height: 0.85;
 		color: var(--color-text);
 		transition: color 0.15s;
 		user-select: none;
@@ -88,21 +88,23 @@ import { SITE_TITLE } from '../consts';
 	/* ── Responsive ─────────────────────────────────────────────── */
 	@media (max-width: 860px) {
 		.header-inner {
-			padding: 16px 1.5rem;
+			padding: 28px 2rem;
 		}
 
 		.masthead-wordmark {
-			letter-spacing: -2px;
+			font-size: clamp(5rem, 8vw, 7rem);
+			letter-spacing: -4px;
 		}
 	}
 
 	@media (max-width: 600px) {
 		.header-inner {
-			padding: 14px 1rem;
+			padding: 20px 1rem;
 		}
 
 		.masthead-wordmark {
-			letter-spacing: -1.5px;
+			font-size: clamp(3rem, 10vw, 4rem);
+			letter-spacing: -2.5px;
 		}
 
 		.nav-links {
