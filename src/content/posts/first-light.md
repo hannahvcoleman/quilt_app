@@ -5,6 +5,7 @@ pubDate: '2026-03-28'
 coverImage: '/images/first-light/cover.jpg'
 tags: ['photography', 'mornings']
 draft: false
+author: Hannah
 ---
 
 There is a window in my kitchen that faces east. For most of the day it's unremarkable — pale grey light, the back of a neighbour's fence, a bird feeder that mostly just feeds squirrels. But for about twenty minutes each morning, from roughly quarter to seven until five past, something happens to the quality of the light that I have never quite managed to describe in words.

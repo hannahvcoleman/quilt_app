@@ -22,6 +22,6 @@ const wordCount = post.body?.split(/\s+/).length ?? 0;
 const readingTime = Math.max(1, Math.round(wordCount / 200));
 ---
 
-<PostLayout {...post.data} readingTime={readingTime}>
+<PostLayout {...post.data} readingTime={readingTime} author={post.data.author}>
 	<Content />
 </PostLayout>

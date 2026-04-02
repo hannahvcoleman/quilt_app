@@ -5,6 +5,7 @@ pubDate: '2026-04-01'
 coverImage: '/images/morning/sunrise.jpg'
 tags: ['photography']
 draft: false
+author: Hannah
 ---
 
 These were taken on the same morning, about forty minutes apart.

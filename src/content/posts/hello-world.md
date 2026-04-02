@@ -5,6 +5,7 @@ pubDate: '2026-03-31'
 coverImage: '/images/hello-world/cover.jpg'
 tags: ['meta']
 draft: false
+author: Hannah
 ---
 
 I have started newsletters before. I have started them on Substack, on Mailchimp, in a notes app I never opened again. Each time the problem was not that I ran out of things to say — it was that the platform felt like a performance. There was always a button shaped like a megaphone. There was always a view count. There was always a faint suggestion that the thing I was writing should be more legible, more consistent, more findable by the algorithm.

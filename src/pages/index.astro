@@ -51,6 +51,7 @@ const featuredDate = featured
 							)}
 							<div class="featured-body">
 								<div class="featured-meta">
+									{featured.data.author && <><span>{featured.data.author}</span><span class="sep">·</span></>}
 									<time datetime={featured.data.pubDate.toISOString()}>{featuredDate}</time>
 									{featured.data.tags && featured.data.tags.length > 0 && (
 										<>
@@ -79,6 +80,7 @@ const featuredDate = featured
 										slug={post.id}
 										coverImage={post.data.coverImage}
 										tags={post.data.tags}
+										author={post.data.author}
 									/>
 								))}
 							</div>
