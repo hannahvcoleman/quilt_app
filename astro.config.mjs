@@ -9,6 +9,6 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	output: 'server',
 	site: 'https://quillt-delta.vercel.app',
-	integrations: [mdx(), sitemap(), react(), keystatic({ injectRoutes: false })],
+	integrations: [mdx(), sitemap(), react(), keystatic()],
 	adapter: vercel(),
 });

@@ -4,7 +4,6 @@ export default config({
 	storage: {
 		kind: 'github',
 		repo: 'hannahvcoleman/quilt_app',
-		pathPrefix: 'quilt_app',
 	},
 	ui: {
 		brand: { name: 'Quillt' },
