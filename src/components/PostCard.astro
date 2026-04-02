@@ -42,17 +42,17 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 </article>
 
 <style>
+	/* Square-edged card: no border-radius on the container */
 	.post-card {
 		border: 1px solid var(--color-border);
-		border-radius: 10px;
-		background: var(--color-surface);
+		border-radius: 0;
+		background: var(--color-bg);
 		overflow: hidden;
-		transition: border-color 0.15s, box-shadow 0.15s;
+		transition: border-color 0.15s;
 	}
 
 	.post-card:hover {
-		border-color: var(--color-accent);
-		box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+		border-color: var(--color-text);
 	}
 
 	.card-link {
@@ -61,12 +61,22 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		color: inherit;
 	}
 
+	/* Square cover image */
+	.card-image {
+		overflow: hidden;
+	}
+
 	.card-image img {
 		width: 100%;
-		height: 200px;
+		height: 220px;
 		object-fit: cover;
 		border-radius: 0;
 		display: block;
+		transition: transform 0.4s ease;
+	}
+
+	.card-link:hover .card-image img {
+		transform: scale(1.03);
 	}
 
 	.card-body {
@@ -78,10 +88,11 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		align-items: center;
 		gap: 0.4em;
 		font-family: var(--font-ui);
-		font-size: 0.8rem;
+		font-size: 0.75rem;
 		color: var(--color-text-muted);
-		letter-spacing: 0.02em;
+		letter-spacing: 0.06em;
 		text-transform: uppercase;
+		margin-bottom: var(--space-xs);
 	}
 
 	.card-sep {
@@ -94,11 +105,12 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 	h2 {
 		font-family: var(--font-display);
-		font-size: 1.3rem;
-		font-weight: 900;
+		font-size: 1.35rem;
+		font-weight: 700;
 		line-height: 1.2;
 		margin: var(--space-xs) 0 var(--space-sm) 0;
 		color: var(--color-text);
+		letter-spacing: -0.01em;
 	}
 
 	.card-link:hover h2 {
@@ -112,22 +124,26 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		line-height: 1.6;
 	}
 
+	/* Editorial tag pills: no border-radius, 1px solid black border */
 	.tags {
 		list-style: none;
 		padding: 0;
 		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--space-xs);
+		gap: 6px;
 	}
 
 	.tags li {
 		font-family: var(--font-ui);
-		font-size: 0.75rem;
-		background: var(--color-bg);
-		color: var(--color-text-muted);
-		border: 1px solid var(--color-border);
-		border-radius: 4px;
-		padding: 0.15em 0.5em;
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-text);
+		background: transparent;
+		border: 1px solid var(--color-text);
+		border-radius: 0;
+		padding: 3px 8px;
 	}
 </style>

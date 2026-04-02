@@ -7,8 +7,8 @@ import keystatic from '@keystatic/astro';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-	output: 'static',
+	output: 'server',
 	site: 'https://quillt-delta.vercel.app',
-	integrations: [mdx(), sitemap(), react(), keystatic()],
+	integrations: [mdx(), sitemap(), react(), keystatic({ injectRoutes: false })],
 	adapter: vercel(),
 });

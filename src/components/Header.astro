@@ -2,77 +2,142 @@
 import { SITE_TITLE } from '../consts';
 ---
 
-<header>
-	<nav>
-		<a href={import.meta.env.BASE_URL} class="site-title">{SITE_TITLE}</a>
+<header class="site-header">
+	<!-- Top bar: nav links sit top-right -->
+	<div class="header-topbar">
 		<div class="nav-links">
-			<a href={import.meta.env.BASE_URL} class="nav-posts">Posts</a>
+			<a href={`${import.meta.env.BASE_URL}posts`} class="nav-posts">Posts</a>
 			<a href={`${import.meta.env.BASE_URL}subscribe`}>Subscribe</a>
 			<a href={`${import.meta.env.BASE_URL}about`}>About</a>
 		</div>
+	</div>
+
+	<!-- Masthead: QUILLT wordmark -->
+	<div class="masthead-wrap">
+		<a href={import.meta.env.BASE_URL} class="masthead-link" aria-label="Quillt – home">
+			<span class="masthead-wordmark">{SITE_TITLE.toUpperCase()}</span>
+		</a>
+	</div>
+
+	<!-- Category / tag strip -->
+	<nav class="tag-strip" aria-label="Browse by category">
+		<a href={import.meta.env.BASE_URL} class="tag-btn active" aria-current="true">All</a>
+		<a href={`${import.meta.env.BASE_URL}?tag=culture`} class="tag-btn">Culture</a>
+		<a href={`${import.meta.env.BASE_URL}?tag=technology`} class="tag-btn">Technology</a>
+		<a href={`${import.meta.env.BASE_URL}?tag=design`} class="tag-btn">Design</a>
+		<a href={`${import.meta.env.BASE_URL}?tag=essays`} class="tag-btn">Essays</a>
+		<a href={`${import.meta.env.BASE_URL}?tag=interviews`} class="tag-btn">Interviews</a>
 	</nav>
 </header>
 
 <style>
-	header {
-		background: var(--color-surface);
-		border-bottom: 1px solid var(--color-border);
-		position: sticky;
-		top: 0;
-		z-index: 10;
+	.site-header {
+		background: var(--color-bg);
+		border-bottom: 2px solid var(--color-text);
 	}
 
-	nav {
+	/* ── Top bar ─────────────────────────────────────────────────── */
+	.header-topbar {
 		display: flex;
+		justify-content: flex-end;
 		align-items: center;
-		justify-content: space-between;
-		max-width: var(--wide-width);
-		margin: 0 auto;
-		padding: 0 var(--space-md);
-		height: 4.5rem;
-	}
-
-	.site-title {
-		font-family: var(--font-display);
-		font-weight: 900;
-		font-size: 1.75rem;
-		color: var(--color-text);
-		text-decoration: none;
-		letter-spacing: -0.02em;
-		line-height: 1;
-	}
-
-	.site-title:hover {
-		color: var(--color-accent);
-		text-decoration: none;
+		padding: 0.75rem 60px;
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.nav-links {
 		display: flex;
-		gap: var(--space-lg);
+		gap: 2rem;
 	}
 
 	.nav-links a {
 		font-family: var(--font-ui);
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		font-weight: 500;
-		color: var(--color-text-muted);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-text);
 		text-decoration: none;
 		transition: color 0.15s;
 	}
 
 	.nav-links a:hover {
 		color: var(--color-accent);
+		text-decoration: none;
 	}
 
-	/* Mobile: hide Posts link — the logo already links home */
+	/* ── Masthead ────────────────────────────────────────────────── */
+	.masthead-wrap {
+		padding: 40px 60px;
+		display: flex;
+		align-items: flex-end;
+	}
+
+	.masthead-link {
+		text-decoration: none;
+		display: block;
+		line-height: 1;
+	}
+
+	.masthead-link:hover {
+		text-decoration: none;
+	}
+
+	.masthead-wordmark {
+		display: block;
+		font-family: var(--font-masthead);
+		font-size: clamp(4rem, 8vw, 8rem);
+		font-weight: 400; /* Archivo Black is always 900 — weight: 400 selects the Black face */
+		letter-spacing: -5px;
+		line-height: 0.85;
+		color: var(--color-text);
+		transition: color 0.15s;
+		user-select: none;
+	}
+
+	.masthead-link:hover .masthead-wordmark {
+		color: var(--color-accent);
+	}
+
+	/* ── Responsive ─────────────────────────────────────────────── */
+	@media (max-width: 860px) {
+		.header-topbar {
+			padding: 0.75rem 1.5rem;
+		}
+
+		.masthead-wrap {
+			padding: 28px 1.5rem;
+		}
+
+		.masthead-wordmark {
+			letter-spacing: -3px;
+		}
+	}
+
 	@media (max-width: 600px) {
+		.header-topbar {
+			padding: 0.6rem 1rem;
+		}
+
+		.nav-links {
+			gap: 1.25rem;
+		}
+
 		.nav-posts {
 			display: none;
 		}
 
-		nav {
-			padding: 0 1rem;
+		.masthead-wrap {
+			padding: 20px 1rem 16px;
+		}
+
+		.masthead-wordmark {
+			letter-spacing: -2px;
+		}
+
+		/* Tag strip: scroll horizontally on small screens */
+		:global(.tag-strip) {
+			flex-wrap: nowrap;
 		}
 	}
 </style>

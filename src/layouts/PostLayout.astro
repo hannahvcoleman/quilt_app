@@ -22,13 +22,15 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 	</head>
 	<body>
 		<Header />
-		<main>
-			{coverImage && (
-				<div class="cover-image">
-					<img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${coverImage}`} alt={title} />
-				</div>
-			)}
 
+		<!-- Hero image: 95vw, full-bleed feel, outside the article container -->
+		{coverImage && (
+			<div class="cover-image">
+				<img src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${coverImage}`} alt={title} loading="eager" />
+			</div>
+		)}
+
+		<main>
 			<article>
 				<header class="post-header">
 					<div class="post-meta">
@@ -38,7 +40,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 						<span>{readingTime} min read</span>
 					</div>
 					<h1>{title}</h1>
-					<p class="description">{description}</p>
+					{description && <p class="description">{description}</p>}
 					<hr />
 				</header>
 
@@ -58,30 +60,31 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 </html>
 
 <style>
-	main {
-		width: var(--wide-width);
-		max-width: calc(100% - clamp(2rem, 4vw, 3rem) * 2);
-		margin: 0 auto;
-		padding: 2rem clamp(1rem, 4vw, 3rem) var(--space-xl);
-	}
-
+	/* Hero image: 95vw centred, square edges, full-impact */
 	.cover-image {
-		width: 100%;
-		margin: 0 0 var(--space-xl);
+		width: 95vw;
+		margin: 0 auto var(--space-xl);
+		display: block;
 	}
 
 	.cover-image img {
 		width: 100%;
-		max-height: 65vh;
+		height: clamp(300px, 55vh, 720px);
 		object-fit: cover;
 		border-radius: 0;
-		box-shadow: var(--box-shadow);
 		display: block;
 	}
 
-	article {
-		max-width: var(--content-width);
+	/* Article body: 75% width centred */
+	main {
+		width: var(--content-width);
+		max-width: calc(100% - clamp(2rem, 5vw, 4rem));
 		margin: 0 auto;
+		padding: 0 0 var(--space-xl);
+	}
+
+	article {
+		width: 100%;
 	}
 
 	.post-header {
@@ -106,36 +109,43 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 	h1 {
 		font-family: var(--font-display);
-		font-size: 2.75rem;
-		font-weight: 900;
+		font-size: clamp(2.25rem, 4.5vw, 4rem);
+		font-weight: 700;
 		line-height: 1.1;
 		margin: var(--space-sm) 0;
-		letter-spacing: -0.01em;
+		letter-spacing: -0.02em;
 	}
 
 	.description {
-		font-size: 1.1rem;
+		font-size: 1.2rem;
 		color: var(--color-text-muted);
-		margin: 0;
-		line-height: 1.5;
+		margin: var(--space-sm) 0 0;
+		line-height: 1.55;
+		font-style: italic;
 	}
 
 	hr {
 		margin: var(--space-lg) 0;
 	}
 
-	/* Images in prose break out wider than text */
+	/* Prose: 1.25rem / 1.7 per brief */
+	.prose {
+		font-size: 1.25rem;
+		line-height: 1.7;
+	}
+
+	/* Images within prose can break out wider than the text column */
 	.prose :global(img) {
-		max-width: var(--wide-width);
-		width: calc(100% + clamp(1rem, 4vw, 3rem) * 2);
-		margin-left: calc(-1 * clamp(1rem, 4vw, 3rem));
+		display: block;
+		width: min(95vw, 1440px);
+		max-width: min(95vw, 1440px);
+		margin: 2em auto;
+		margin-left: calc(50% - min(47.5vw, 720px));
 		border-radius: 0;
-		box-shadow: var(--box-shadow);
 	}
 
 	.back-link {
-		max-width: var(--content-width);
-		margin: var(--space-xl) auto 0;
+		margin: var(--space-xl) 0 0;
 		font-family: var(--font-ui);
 		font-size: 0.9rem;
 	}
@@ -148,17 +158,39 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		color: var(--color-accent);
 	}
 
+	/* ── Responsive ────────────────────────────────────── */
 	@media (max-width: 860px) {
-		h1 { font-size: 2rem; }
+		.cover-image {
+			width: 100%;
+		}
+
+		h1 {
+			font-size: 2rem;
+		}
 
 		.prose :global(img) {
 			width: 100%;
+			max-width: 100%;
 			margin-left: 0;
-			margin-right: 0;
 		}
 	}
 
 	@media (max-width: 600px) {
-		h1 { font-size: 1.75rem; }
+		main {
+			max-width: calc(100% - 2rem);
+		}
+
+		.cover-image {
+			width: 100%;
+			margin-bottom: var(--space-lg);
+		}
+
+		h1 {
+			font-size: 1.75rem;
+		}
+
+		.prose {
+			font-size: 1.1rem;
+		}
 	}
 </style>
