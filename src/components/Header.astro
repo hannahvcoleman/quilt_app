@@ -3,31 +3,19 @@ import { SITE_TITLE } from '../consts';
 ---
 
 <header class="site-header">
-	<!-- Top bar: nav links sit top-right -->
-	<div class="header-topbar">
-		<div class="nav-links">
-			<a href={`${import.meta.env.BASE_URL}posts`} class="nav-posts">Posts</a>
-			<a href={`${import.meta.env.BASE_URL}subscribe`}>Subscribe</a>
-			<a href={`${import.meta.env.BASE_URL}about`}>About</a>
-		</div>
-	</div>
-
-	<!-- Masthead: QUILLT wordmark -->
-	<div class="masthead-wrap">
+	<div class="header-inner">
+		<!-- Masthead: QUILLT wordmark -->
 		<a href={import.meta.env.BASE_URL} class="masthead-link" aria-label="Quillt – home">
 			<span class="masthead-wordmark">{SITE_TITLE.toUpperCase()}</span>
 		</a>
-	</div>
 
-	<!-- Category / tag strip -->
-	<nav class="tag-strip" aria-label="Browse by category">
-		<a href={import.meta.env.BASE_URL} class="tag-btn active" aria-current="true">All</a>
-		<a href={`${import.meta.env.BASE_URL}?tag=culture`} class="tag-btn">Culture</a>
-		<a href={`${import.meta.env.BASE_URL}?tag=technology`} class="tag-btn">Technology</a>
-		<a href={`${import.meta.env.BASE_URL}?tag=design`} class="tag-btn">Design</a>
-		<a href={`${import.meta.env.BASE_URL}?tag=essays`} class="tag-btn">Essays</a>
-		<a href={`${import.meta.env.BASE_URL}?tag=interviews`} class="tag-btn">Interviews</a>
-	</nav>
+		<!-- Nav links -->
+		<nav class="nav-links" aria-label="Site navigation">
+			<a href={`${import.meta.env.BASE_URL}posts`} class="nav-btn">Posts</a>
+			<a href={`${import.meta.env.BASE_URL}subscribe`} class="nav-btn">Subscribe</a>
+			<a href={`${import.meta.env.BASE_URL}about`} class="nav-btn">About</a>
+		</nav>
+	</div>
 </header>
 
 <style>
@@ -36,43 +24,14 @@ import { SITE_TITLE } from '../consts';
 		border-bottom: 2px solid var(--color-text);
 	}
 
-	/* ── Top bar ─────────────────────────────────────────────────── */
-	.header-topbar {
+	.header-inner {
 		display: flex;
-		justify-content: flex-end;
 		align-items: center;
-		padding: 0.75rem 60px;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.nav-links {
-		display: flex;
-		gap: 2rem;
-	}
-
-	.nav-links a {
-		font-family: var(--font-ui);
-		font-size: 0.8rem;
-		font-weight: 500;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-text);
-		text-decoration: none;
-		transition: color 0.15s;
-	}
-
-	.nav-links a:hover {
-		color: var(--color-accent);
-		text-decoration: none;
+		justify-content: space-between;
+		padding: 20px 60px;
 	}
 
 	/* ── Masthead ────────────────────────────────────────────────── */
-	.masthead-wrap {
-		padding: 40px 60px;
-		display: flex;
-		align-items: flex-end;
-	}
-
 	.masthead-link {
 		text-decoration: none;
 		display: block;
@@ -86,10 +45,10 @@ import { SITE_TITLE } from '../consts';
 	.masthead-wordmark {
 		display: block;
 		font-family: var(--font-masthead);
-		font-size: clamp(4rem, 8vw, 8rem);
+		font-size: clamp(2.5rem, 5vw, 4.5rem);
 		font-weight: 400; /* Archivo Black is always 900 — weight: 400 selects the Black face */
-		letter-spacing: -5px;
-		line-height: 0.85;
+		letter-spacing: -3px;
+		line-height: 0.9;
 		color: var(--color-text);
 		transition: color 0.15s;
 		user-select: none;
@@ -99,45 +58,60 @@ import { SITE_TITLE } from '../consts';
 		color: var(--color-accent);
 	}
 
-	/* ── Responsive ─────────────────────────────────────────────── */
-	@media (max-width: 860px) {
-		.header-topbar {
-			padding: 0.75rem 1.5rem;
-		}
-
-		.masthead-wrap {
-			padding: 28px 1.5rem;
-		}
-
-		.masthead-wordmark {
-			letter-spacing: -3px;
-		}
+	/* ── Nav links ───────────────────────────────────────────────── */
+	.nav-links {
+		display: flex;
+		gap: 8px;
+		align-items: center;
 	}
 
-	@media (max-width: 600px) {
-		.header-topbar {
-			padding: 0.6rem 1rem;
-		}
+	.nav-btn {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-text);
+		text-decoration: none;
+		border: 1px solid var(--color-text);
+		border-radius: 0;
+		padding: 8px 15px;
+		transition: background 0.15s, color 0.15s;
+	}
 
-		.nav-links {
-			gap: 1.25rem;
-		}
+	.nav-btn:hover {
+		background: var(--color-text);
+		color: var(--color-bg);
+		text-decoration: none;
+	}
 
-		.nav-posts {
-			display: none;
-		}
-
-		.masthead-wrap {
-			padding: 20px 1rem 16px;
+	/* ── Responsive ─────────────────────────────────────────────── */
+	@media (max-width: 860px) {
+		.header-inner {
+			padding: 16px 1.5rem;
 		}
 
 		.masthead-wordmark {
 			letter-spacing: -2px;
 		}
+	}
 
-		/* Tag strip: scroll horizontally on small screens */
-		:global(.tag-strip) {
-			flex-wrap: nowrap;
+	@media (max-width: 600px) {
+		.header-inner {
+			padding: 14px 1rem;
+		}
+
+		.masthead-wordmark {
+			letter-spacing: -1.5px;
+		}
+
+		.nav-links {
+			gap: 6px;
+		}
+
+		.nav-btn {
+			padding: 6px 10px;
+			font-size: 0.72rem;
 		}
 	}
 </style>
