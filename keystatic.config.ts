@@ -1,4 +1,5 @@
-import { config, collection, fields, component } from '@keystatic/core';
+import { config, collection, fields } from '@keystatic/core';
+import { block } from '@keystatic/core/content-components';
 
 export default config({
 	storage: {
@@ -37,17 +38,25 @@ export default config({
 				),
 				draft: fields.checkbox({ label: 'Draft', defaultValue: false }),
 				author: fields.text({ label: 'Author', defaultValue: '' }),
-				content: fields.document({
+				content: fields.markdoc({
 					label: 'Content',
-					formatting: true,
-					dividers: true,
-					links: true,
-					images: {
-						directory: 'public/images',
-						publicPath: '/images/',
+					options: {
+						bold: true,
+						italic: true,
+						strikethrough: true,
+						heading: true,
+						unorderedList: true,
+						orderedList: true,
+						blockquote: true,
+						divider: true,
+						link: true,
+						image: {
+							directory: 'public/images',
+							publicPath: '/images/',
+						},
 					},
-					componentBlocks: {
-						gallery: component({
+					components: {
+						gallery: block({
 							label: 'Gallery',
 							schema: {
 								images: fields.array(
@@ -74,9 +83,8 @@ export default config({
 									defaultValue: 'auto',
 								}),
 							},
-							preview: () => null,
 						}),
-						image70: component({
+						image70: block({
 							label: '70% Width Image',
 							schema: {
 								src: fields.image({
@@ -87,7 +95,6 @@ export default config({
 								alt: fields.text({ label: 'Alt text' }),
 								caption: fields.text({ label: 'Caption' }),
 							},
-							preview: () => null,
 						}),
 					},
 				}),

@@ -1,0 +1,35 @@
+
+> quilt-app@0.0.1 build
+> astro sync && astro build
+
+17:38:58 [WARN] [router] The route "/keystatic/[...params]" is defined in both "src/pages/keystatic/[...params].astro" and "node_modules/@keystatic/astro/internal/keystatic-astro-page.astro" using SSR mode. A dynamic SSR route cannot be defined more than once.
+17:38:58 [WARN] [router] A collision will result in a hard error in following versions of Astro.
+17:38:58 [vite] Re-optimizing dependencies because vite config has changed
+17:38:59 [content] Syncing content
+17:38:59 [content] Synced content
+17:38:59 [types] Generated 471ms
+17:39:00 [WARN] [router] The route "/keystatic/[...params]" is defined in both "src/pages/keystatic/[...params].astro" and "node_modules/@keystatic/astro/internal/keystatic-astro-page.astro" using SSR mode. A dynamic SSR route cannot be defined more than once.
+17:39:00 [WARN] [router] A collision will result in a hard error in following versions of Astro.
+17:39:00 [WARN] [router] The route "/keystatic/[...params]" is defined in both "src/pages/keystatic/[...params].astro" and "node_modules/@keystatic/astro/internal/keystatic-astro-page.astro" using SSR mode. A dynamic SSR route cannot be defined more than once.
+17:39:00 [WARN] [router] A collision will result in a hard error in following versions of Astro.
+17:39:00 [content] Syncing content
+17:39:00 [content] Synced content
+17:39:00 [types] Generated 299ms
+17:39:00 [build] output: "server"
+17:39:00 [build] mode: "server"
+17:39:00 [build] directory: /Users/hannahcoleman/VS_Code/quilt_app/dist/
+17:39:00 [build] adapter: @astrojs/vercel
+17:39:00 [build] Collecting build info...
+17:39:00 [build] ✓ Completed in 578ms.
+17:39:00 [build] Building server entrypoints...
+17:39:01 [ERROR] [vite] ✗ Build failed in 367ms
+[vite]: Rollup failed to resolve import "astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fposts%2Ftest.mdoc&astroContentModuleFlag=true" from "/Users/hannahcoleman/VS_Code/quilt_app/.astro/content-modules.mjs".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`
+  Stack trace:
+    at viteLog (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/vite/dist/node/chunks/config.js:33635:57)
+    at onwarn (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/@vitejs/plugin-react/dist/index.js:76:7)
+    at onRollupLog (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/vite/dist/node/chunks/config.js:33664:63)
+    at file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/rollup/dist/es/shared/node-entry.js:21369:32
+    at ModuleLoader.handleInvalidResolvedId (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/rollup/dist/es/shared/node-entry.js:22108:26)
