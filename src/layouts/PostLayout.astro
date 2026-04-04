@@ -60,7 +60,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 </html>
 
 <style>
-	/* Hero image: 95vw centred, square edges, full-impact */
+	/* Hero image: 95% width centred, square edges, full-impact */
 	.cover-image {
 		width: 95vw;
 		margin: 0 auto var(--space-xl);
@@ -69,9 +69,9 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 	.cover-image img {
 		width: 100%;
-		height: clamp(300px, 55vh, 720px);
-		object-fit: cover;
+		height: auto;
 		border-radius: 0;
+		border: none;
 		display: block;
 	}
 
@@ -134,13 +134,12 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		line-height: 1.7;
 	}
 
-	/* Images within prose can break out wider than the text column */
+	/* Images within prose are max-width 70% and centred */
 	.prose :global(img) {
 		display: block;
-		width: min(95vw, 1440px);
-		max-width: min(95vw, 1440px);
+		max-width: 70%;
+		height: auto;
 		margin: 2em auto;
-		margin-left: calc(50% - min(47.5vw, 720px));
 		border-radius: 0;
 	}
 
@@ -171,7 +170,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		.prose :global(img) {
 			width: 100%;
 			max-width: 100%;
-			margin-left: 0;
+			margin: 2em auto;
 		}
 	}
 

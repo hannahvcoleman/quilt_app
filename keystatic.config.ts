@@ -2,8 +2,7 @@ import { config, collection, fields } from '@keystatic/core';
 
 export default config({
 	storage: {
-		kind: 'github',
-		repo: 'hannahvcoleman/quilt_app',
+		kind: 'local',
 	},
 	ui: {
 		brand: { name: 'Quillt' },
