@@ -1,0 +1,55 @@
+---
+interface Props {
+	src?: string;
+	alt?: string;
+	caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function resolveUrl(src?: string) {
+	if (!src) return '';
+	if (src.startsWith('http')) return src;
+	return `${base}${src.startsWith('/') ? src : '/' + src}`;
+}
+
+const resolvedSrc = resolveUrl(src);
+---
+
+{src && (
+<figure class="image-70">
+	<img src={resolvedSrc} alt={alt ?? ''} loading="lazy" />
+	{caption && <figcaption>{caption}</figcaption>}
+</figure>
+)}
+
+<style>
+	.image-70 {
+		display: block;
+		width: 70%;
+		margin: 2em auto;
+	}
+
+	.image-70 img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 4px;
+		margin: 0;
+	}
+
+	figcaption {
+		font-family: var(--font-ui);
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		padding: 0.5rem 0;
+		text-align: center;
+	}
+
+	@media (max-width: 860px) {
+		.image-70 {
+			width: 100%;
+		}
+	}
+</style>
