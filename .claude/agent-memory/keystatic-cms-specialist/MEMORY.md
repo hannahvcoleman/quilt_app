@@ -1,3 +1,3 @@
 - [Keystatic Astro 6 blank page fix](keystatic_astro6_blank_page.md) — React renderer not in server manifest; fixed with project-owned wrapper component
-- [Project CMS configuration](project_cms_config.md) — posts collection, GitHub mode, repo hannahvcoleman/quilt_app, Vercel deployment
-- [Keystatic Vercel blank page and 404 diagnosis](keystatic_vercel_diagnosis.md) — renderers:[] in manifest is root cause; route collision from ignored injectRoutes arg compounds it
+- [Project CMS configuration](project_cms_config.md) — posts collection, GitHub mode, repo hannahvcoleman/quilt_app, Vercel deployment, post-cleanup state
+- [Keystatic debugging history — resolved](keystatic_vercel_diagnosis.md) — root cause was swapped Vercel env vars; historical record of what was added/removed during debugging

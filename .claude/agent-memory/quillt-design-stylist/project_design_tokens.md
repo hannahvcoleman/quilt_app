@@ -50,5 +50,10 @@ Note: Playfair Display has been removed.
 - 860px: single-column grid, body 18px, main padding 1.25rem sides
 - 600px: hero image 42vh, body 17px, main padding 1rem sides, Posts nav link hidden
 
-**Why:** Colossal-inspired overhaul — cream background, Archivo Black masthead, 75% content width, 95vw hero images, editorial tag strip.
+**Masthead sizing (Header.astro)**
+- Desktop: `clamp(8rem, 12vw, 12rem)`, letter-spacing `-6px`, line-height `0.85`, padding `40px 60px`
+- Tablet (≤860px): `clamp(5rem, 8vw, 7rem)`, letter-spacing `-4px`, padding `28px 2rem`
+- Mobile (≤600px): `clamp(3rem, 10vw, 4rem)`, letter-spacing `-2.5px`, padding `20px 1rem`
+
+**Why:** Colossal-inspired overhaul — cream background, Archivo Black masthead, 75% content width, 95vw hero images, editorial tag strip. Masthead scaled up 2026-04-01 to be intentionally dominant — first thing you notice.
 **How to apply:** Always use these tokens rather than hardcoded hex values. All components use custom properties — zero hardcoded hex outside `:root` definitions.

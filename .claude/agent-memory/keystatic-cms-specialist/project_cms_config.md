@@ -4,7 +4,7 @@ description: Keystatic config, collections, storage, and file locations for the 
 type: project
 ---
 
-**Storage:** GitHub mode, repo `hannahvcoleman/quilt_app`
+**Storage:** GitHub mode, repo `hannahvcoleman/quilt_app`, no pathPrefix (project is at repo root)
 
 **Collections:**
 - `posts` — slugField: `title`, path: `src/content/posts/*`, format: `{ contentField: 'content' }`
@@ -13,13 +13,15 @@ type: project
 
 **Config file:** `/Users/hannahcoleman/VS_Code/quilt_app/keystatic.config.ts`
 
-**Route files:**
-- UI page: `src/pages/keystatic/[...params].astro` (project-owned, prerender: false)
-- API handler: `src/pages/api/keystatic/[...params].ts` (project-owned, prerender: false)
-- React wrapper: `src/components/KeystaticApp.tsx` (required for Astro 6 React renderer registration)
+**Route files (post-cleanup):**
+- UI page: `src/pages/keystatic/[...params].astro` (project-owned, prerender: false) — kept for Astro 6 React renderer registration
+- API handler: deleted — integration injects `/api/keystatic/[...params]` automatically; project-owned duplicate was causing route collision warnings
+- React wrapper: `src/components/KeystaticApp.tsx` (required for Astro 6 React renderer registration in injected SSR routes)
 
-**Deployment:** Vercel at https://quillt-delta.vercel.app
+**Deployment:** Vercel at https://quillt-delta.vercel.app, output: 'server', @astrojs/vercel adapter
 
-**Integration:** `@keystatic/astro@5.0.6` with `--legacy-peer-deps` (Astro 6 not in peer dep range)
+**Integration:** `@keystatic/astro` called as `keystatic()` (no args — integration takes 0 params, any args are silently ignored)
 
-**Astro content schema:** `src/content/config.ts` (verify location) — must stay in sync with keystatic.config.ts
+**Root cause of past Keystatic breakage:** Swapped environment variables in Vercel — not a code problem. CMS is working as of 2026-04-01.
+
+**Astro content schema:** `src/content/config.ts` — must stay in sync with keystatic.config.ts
