@@ -1,6 +1,6 @@
 ---
 interface Props {
-	src: string;
+	src?: string;
 	alt?: string;
 	caption?: string;
 }
@@ -8,7 +8,8 @@ interface Props {
 const { src, alt, caption } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-function resolveUrl(src: string) {
+function resolveUrl(src?: string) {
+	if (!src) return '';
 	if (src.startsWith('http')) return src;
 	return `${base}${src.startsWith('/') ? src : '/' + src}`;
 }
@@ -16,10 +17,12 @@ function resolveUrl(src: string) {
 const resolvedSrc = resolveUrl(src);
 ---
 
+{src && (
 <figure class="image-70">
 	<img src={resolvedSrc} alt={alt ?? ''} loading="lazy" />
 	{caption && <figcaption>{caption}</figcaption>}
 </figure>
+)}
 
 <style>
 	.image-70 {

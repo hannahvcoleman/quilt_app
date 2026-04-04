@@ -12,7 +12,7 @@ export default defineMarkdocConfig({
     image70: {
       render: component('./src/components/Image70.astro'),
       attributes: {
-        src: { type: String, required: true },
+        src: { type: String },
         alt: { type: String },
         caption: { type: String },
       },
