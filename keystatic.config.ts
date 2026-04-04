@@ -1,4 +1,4 @@
-import { config, collection, fields } from '@keystatic/core';
+import { config, collection, fields, component } from '@keystatic/core';
 
 export default config({
 	storage: {
@@ -44,6 +44,50 @@ export default config({
 					images: {
 						directory: 'public/images',
 						publicPath: '/images/',
+					},
+					componentBlocks: {
+						gallery: component({
+							label: 'Gallery',
+							schema: {
+								images: fields.array(
+									fields.object({
+										src: fields.image({
+											label: 'Image',
+											directory: 'public/images',
+											publicPath: '/images/',
+										}),
+										alt: fields.text({ label: 'Alt text' }),
+										caption: fields.text({ label: 'Caption' }),
+									}),
+									{ label: 'Images', itemLabel: props => props.fields.caption.value || 'Image' }
+								),
+								layout: fields.select({
+									label: 'Layout',
+									options: [
+										{ label: 'Auto', value: 'auto' },
+										{ label: '2x1', value: '2x1' },
+										{ label: '3x1', value: '3x1' },
+										{ label: '2x2', value: '2x2' },
+										{ label: '3x3', value: '3x3' },
+									],
+									defaultValue: 'auto',
+								}),
+							},
+							preview: () => null,
+						}),
+						image70: component({
+							label: '70% Width Image',
+							schema: {
+								src: fields.image({
+									label: 'Image',
+									directory: 'public/images',
+									publicPath: '/images/',
+								}),
+								alt: fields.text({ label: 'Alt text' }),
+								caption: fields.text({ label: 'Caption' }),
+							},
+							preview: () => null,
+						}),
 					},
 				}),
 			},

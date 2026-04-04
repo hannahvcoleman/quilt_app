@@ -42,17 +42,15 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 </article>
 
 <style>
-	/* Square-edged card: no border-radius on the container */
+	/* Sleek borderless card */
 	.post-card {
-		border: 1px solid var(--color-border);
-		border-radius: 0;
-		background: var(--color-bg);
+		background: transparent;
 		overflow: hidden;
-		transition: border-color 0.15s;
+		transition: transform 0.2s ease, opacity 0.2s ease;
 	}
 
 	.post-card:hover {
-		border-color: var(--color-text);
+		opacity: 0.95;
 	}
 
 	.card-link {
@@ -86,12 +84,11 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 	.card-meta {
 		display: flex;
 		align-items: center;
-		gap: 0.4em;
+		gap: 0.5em;
 		font-family: var(--font-ui);
-		font-size: 0.75rem;
+		font-size: 0.70rem;
 		color: var(--color-text-muted);
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
+		letter-spacing: 0.02em;
 		margin-bottom: var(--space-xs);
 	}
 
@@ -124,26 +121,28 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 		line-height: 1.6;
 	}
 
-	/* Editorial tag pills: no border-radius, 1px solid black border */
+	/* Sleek tag list */
 	.tags {
 		list-style: none;
 		padding: 0;
 		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 6px;
+		gap: 8px;
 	}
 
 	.tags li {
 		font-family: var(--font-ui);
-		font-size: 0.72rem;
+		font-size: 0.7rem;
 		font-weight: 500;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		color: var(--color-text);
+		letter-spacing: 0.02em;
+		color: var(--color-text-muted);
 		background: transparent;
-		border: 1px solid var(--color-text);
-		border-radius: 0;
-		padding: 3px 8px;
+		border: none;
+		padding: 0;
+	}
+	.tags li::before {
+		content: '#';
+		opacity: 0.5;
 	}
 </style>

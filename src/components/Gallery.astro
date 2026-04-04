@@ -10,7 +10,7 @@ interface Props {
 	layout?: '2x1' | '3x1' | '2x2' | '3x3';
 }
 
-const { images, layout } = Astro.props;
+const { images = [], layout } = Astro.props;
 
 // Auto-detect layout from image count if not specified
 function autoLayout(count: number): string {
