@@ -36,6 +36,7 @@ export default config({
 					{ label: 'Tags' }
 				),
 				draft: fields.checkbox({ label: 'Draft', defaultValue: false }),
+				author: fields.text({ label: 'Author', defaultValue: '' }),
 				content: fields.document({
 					label: 'Content',
 					formatting: true,
