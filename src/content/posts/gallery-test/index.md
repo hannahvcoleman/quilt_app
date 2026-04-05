@@ -2,7 +2,7 @@
 title: Gallery test
 description: Testing the four gallery layouts with placeholder images.
 pubDate: 2026-04-01
-coverImage: ./gallery-test/coverImage.JPG
+coverImage: ./coverImage.JPG
 tags: []
 draft: false
 author: Hannah
@@ -12,7 +12,7 @@ This post tests all four gallery layouts. Set `draft: false` to publish it, or d
 ## 2×1 — two images side by side
 
 {% gallery
-   images=[{src: "./gallery-test/DSCF0359.jpg", alt: "Sunrise"}, {alt: "Bird"}]
+   images=[{src: "./DSCF0359.jpg", alt: "Sunrise"}, {alt: "Bird"}]
    layout="2x1" /%}
 
 ## 3×1 — three across

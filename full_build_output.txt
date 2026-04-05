@@ -1,0 +1,33 @@
+
+> quilt-app@0.0.1 build
+> astro sync && astro build
+
+15:29:32 [vite] Re-optimizing dependencies because vite config has changed
+15:29:33 [content] Syncing content
+15:29:33 [content] Synced content
+15:29:33 [types] Generated 433ms
+15:29:36 [vite] Re-optimizing dependencies because vite config has changed
+15:29:37 [content] Syncing content
+15:29:37 [content] Synced content
+15:29:37 [types] Generated 400ms
+15:29:37 [build] output: "server"
+15:29:37 [build] mode: "server"
+15:29:37 [build] directory: /Users/hannahcoleman/VS_Code/quilt_app/dist/
+15:29:37 [build] adapter: @astrojs/vercel
+15:29:37 [build] Collecting build info...
+15:29:37 [build] ✓ Completed in 1.05s.
+15:29:37 [build] Building server entrypoints...
+15:29:37 [ERROR] [vite] ✗ Build failed in 423ms
+[ImageNotFound] [commonjs--resolver] Could not find requested image `./gallery-test/coverImage.JPG`. Does it exist?
+  Hint:
+    This is often caused by a typo in the image path. Please make sure the file exists, and is spelled correctly.
+  Error reference:
+    https://docs.astro.build/en/reference/errors/image-not-found/
+  Location:
+    /Users/hannahcoleman/VS_Code/quilt_app/node_modules/astro/dist/content/vite-plugin-content-assets.js:40:19
+  Stack trace:
+    at Object.handler (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/astro/dist/content/vite-plugin-content-assets.js:40:19)
+    at async resolveId (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/rollup/dist/es/shared/node-entry.js:21300:26)
+    at async Object.resolveId (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/vite/dist/node/chunks/config.js:4154:21)
+    at async resolveId (file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/rollup/dist/es/shared/node-entry.js:21300:26)
+    at async file:///Users/hannahcoleman/VS_Code/quilt_app/node_modules/rollup/dist/es/shared/node-entry.js:22066:50
