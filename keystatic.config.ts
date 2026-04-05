@@ -66,11 +66,7 @@ export default config({
 							schema: {
 								images: fields.array(
 									fields.object({
-										src: fields.image({
-											label: 'Image',
-											directory: 'src/content/posts',
-											publicPath: './',
-										}),
+										src: fields.text({ label: 'Image path', defaultValue: '' }),
 										alt: fields.text({ label: 'Alt text', defaultValue: '' }),
 										caption: fields.text({ label: 'Caption', defaultValue: '' }),
 									}),
@@ -96,13 +92,9 @@ export default config({
 						image70: block({
 							label: '70% Width Image',
 							schema: {
-								src: fields.image({
-									label: 'Image',
-									directory: 'src/content/posts',
-									publicPath: './',
-								}),
-								alt: fields.text({ label: 'Alt text' }),
-								caption: fields.text({ label: 'Caption' }),
+								src: fields.text({ label: 'Image path', defaultValue: '' }),
+								alt: fields.text({ label: 'Alt text', defaultValue: '' }),
+								caption: fields.text({ label: 'Caption', defaultValue: '' }),
 							},
 						}),
 					},
