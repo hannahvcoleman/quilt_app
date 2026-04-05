@@ -44,7 +44,7 @@ export default config({
 				author: fields.text({ label: 'Author', defaultValue: '' }),
 				content: fields.markdoc({
 					label: 'Content',
-					extension: 'md',
+					extension: 'mdoc',
 					options: {
 						bold: true,
 						italic: true,
