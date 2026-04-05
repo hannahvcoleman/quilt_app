@@ -1,0 +1,13 @@
+---
+// Required for Keystatic CMS to work in Astro 6 with output: 'server'.
+// The @keystatic/astro integration injects /keystatic/[...params] via
+// injectRoute(), but in Astro 6 injected external routes do not get the
+// React renderer registered in the server manifest — causing a blank page.
+// This project-level page takes precedence over the injected route and
+// forces Astro to track the React dependency so that client:only="react"
+// hydration scripts are emitted correctly.
+import KeystaticApp from '../../components/KeystaticApp';
+export const prerender = false;
+---
+
+<KeystaticApp client:only="react" />
