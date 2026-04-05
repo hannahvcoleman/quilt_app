@@ -13,7 +13,7 @@ export default config({
 		posts: collection({
 			label: 'Posts',
 			slugField: 'title',
-			path: 'src/content/posts/*',
+			path: 'src/content/posts/*/index',
 			format: { contentField: 'content' },
 			schema: {
 				title: fields.slug({ name: { label: 'Title' } }),
@@ -29,8 +29,8 @@ export default config({
 				}),
 				coverImage: fields.image({
 					label: 'Cover image',
-					directory: 'public/images',
-					publicPath: '/images/',
+					directory: 'src/content/posts',
+					publicPath: './',
 				}),
 				tags: fields.array(
 					fields.text({ label: 'Tag' }),
@@ -40,6 +40,7 @@ export default config({
 				author: fields.text({ label: 'Author', defaultValue: '' }),
 				content: fields.markdoc({
 					label: 'Content',
+					extension: 'md',
 					options: {
 						bold: true,
 						italic: true,
@@ -51,8 +52,8 @@ export default config({
 						divider: true,
 						link: true,
 						image: {
-							directory: 'public/images',
-							publicPath: '/images/',
+							directory: 'src/content/posts',
+							publicPath: './',
 						},
 					},
 					components: {
@@ -63,8 +64,8 @@ export default config({
 									fields.object({
 										src: fields.image({
 											label: 'Image',
-											directory: 'public/images',
-											publicPath: '/images/',
+											directory: 'src/content/posts',
+											publicPath: './',
 										}),
 										alt: fields.text({ label: 'Alt text' }),
 										caption: fields.text({ label: 'Caption' }),
@@ -89,8 +90,8 @@ export default config({
 							schema: {
 								src: fields.image({
 									label: 'Image',
-									directory: 'public/images',
-									publicPath: '/images/',
+									directory: 'src/content/posts',
+									publicPath: './',
 								}),
 								alt: fields.text({ label: 'Alt text' }),
 								caption: fields.text({ label: 'Caption' }),

@@ -164,3 +164,8 @@ public/
 .github/workflows/
   deploy.yml         <- GitHub Pages deploy action
 ```
+Project Name: Quillt (not Hannah's Blog).
+
+Coding Style: Modular Astro components.
+
+Token Management: Always look for a specs/ file before proposing changes. Always suggest /compact after a successful git commit.
