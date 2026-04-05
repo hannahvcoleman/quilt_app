@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Image {
 	src: string;
 	alt?: string;
@@ -26,6 +28,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 function resolveUrl(src: string) {
 	if (src.startsWith('http')) return src;
+	if (src.startsWith('./') || src.startsWith('../')) return src;
 	return `${base}${src.startsWith('/') ? src : '/' + src}`;
 }
 
@@ -35,7 +38,11 @@ const cols = resolvedLayout.startsWith('3') ? 3 : 2;
 <figure class="gallery" data-layout={resolvedLayout} style={`--cols: ${cols}`}>
 	{images.map((img) => (
 		<div class="gallery-item">
-			<img src={resolveUrl(img.src)} alt={img.alt ?? ''} loading="lazy" />
+			{img.src.startsWith('http') || img.src.startsWith('./') || img.src.startsWith('../') ? (
+				<img src={resolveUrl(img.src)} alt={img.alt ?? ''} loading="lazy" />
+			) : (
+				<img src={resolveUrl(img.src)} alt={img.alt ?? ''} loading="lazy" />
+			)}
 			{img.caption && <figcaption>{img.caption}</figcaption>}
 		</div>
 	))}
