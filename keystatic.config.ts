@@ -3,7 +3,7 @@ import { block } from '@keystatic/core/content-components';
 
 export default config({
 	storage:
-		import.meta.env.DEV
+		typeof import.meta.env !== 'undefined' && import.meta.env.DEV
 			? { kind: 'local' }
 			: {
 					kind: 'github',
