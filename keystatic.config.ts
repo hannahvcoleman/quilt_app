@@ -2,9 +2,12 @@ import { config, collection, fields } from '@keystatic/core';
 import { block } from '@keystatic/core/content-components';
 
 export default config({
-	storage: {
-		kind: 'local',
-	},
+	storage: process.env.NODE_ENV === 'development'
+		? { kind: 'local' }
+		: {
+				kind: 'github',
+				repo: 'hannahvcoleman/quilt_app',
+		  },
 	ui: {
 		brand: { name: 'Quillt' },
 	},
