@@ -71,10 +71,14 @@ export default config({
 											directory: 'src/content/posts',
 											publicPath: './',
 										}),
-										alt: fields.text({ label: 'Alt text' }),
-										caption: fields.text({ label: 'Caption' }),
+										alt: fields.text({ label: 'Alt text', defaultValue: '' }),
+										caption: fields.text({ label: 'Caption', defaultValue: '' }),
 									}),
-									{ label: 'Images', itemLabel: props => props.fields.caption.value || 'Image' }
+									{
+										label: 'Images',
+										itemLabel: props =>
+											props.fields.alt.value || props.fields.caption.value || 'Image',
+									}
 								),
 								layout: fields.select({
 									label: 'Layout',
