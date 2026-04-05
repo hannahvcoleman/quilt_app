@@ -34,3 +34,17 @@
 - `src/layouts/`: Base Page and Post layouts.
 - `src/pages/`: File-based routing (Index, Posts, Subscribe).
 - `keystatic.config.ts`: CMS schema and custom Markdoc blocks (`gallery`, `image70`).
+## Development Constraints & Scope
+- **Strict Scope**: Only modify code explicitly requested in the active task or Spec. Do not apply "polish," adjust CSS/alignment, or refactor unrelated components (e.g., do not center titles unless asked).
+- **No Asset Generation**: Never use AI tools to generate images, icons, or placeholders. Use existing files in `public/images/` or `src/content/posts/*/` for all testing.
+- **Environment**: Always assume Node 22 and Astro 6. Ensure all commands use `npm`.
+- **Git Strategy**: Always create a specific feature branch for each task (e.g., `fix/name-of-task`).
+- **Token Efficiency**: 
+    - Favor surgical edits over rewriting entire files.
+    - If a task is ambiguous, ask for clarification instead of making "aesthetic" assumptions.
+    - Refer to `keystatic.config.ts` for the "Source of Truth" regarding content structure.
+
+## Content Structure (Source of Truth)
+- **Posts**: Located at `src/content/posts/*/index.md`.
+- **Assets**: Images must be colocated within the specific post folder.
+- **CMS Path**: `keystatic.config.ts` must use `path: 'src/content/posts/*/index'`.
