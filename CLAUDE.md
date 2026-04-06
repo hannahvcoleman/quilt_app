@@ -9,10 +9,17 @@
 - `npm run preview`: Preview production build
 - `npm run lint:islands`: Run hydration linter for Astro islands
 
-## Git Workflow Rule:
-- For every new task/spec, you MUST create a new feature branch using the format feat/short-description.
-- Do not work on main directly.
-- Once the task is complete, provide a summary of changes and the command to push the branch.
+## Git Workflow
+
+**Every task must follow this sequence:**
+
+1. `git checkout main && git pull` — always start from a fresh main
+2. `git checkout -b feat/short-description` (or `fix/`, `task/`) — one branch per task
+3. Develop and test locally
+4. `git push -u origin feat/short-description` — push only after local verification passes
+5. Do NOT merge to main without explicit approval from Hannah
+
+Claude must never commit directly to main or merge branches without being asked.
 
 ## Coding Style & Conventions
 - **Framework**: Astro 6.x with Keystatic CMS (Local Storage Mode).

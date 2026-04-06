@@ -2,7 +2,7 @@
 title: Gallery test
 description: Testing the four gallery layouts with placeholder images.
 pubDate: 2026-04-01
-coverImage: ./coverImage.JPG
+coverImage: ./coverImage.jpg
 tags: []
 draft: false
 author: Hannah
