@@ -8,8 +8,9 @@
   },
   "scripts": {
     "dev": "concurrently -n norm,astro -c cyan,blue --kill-others-on-fail \"node scripts/normalize-assets.mjs --watch\" \"astro dev\"",
-    "prebuild": "node scripts/normalize-assets.mjs",
+    "prebuild": "node scripts/sanitize-quotes.mjs && node scripts/normalize-assets.mjs",
     "build": "rm -rf .astro && astro sync && astro build",
+    "test": "vitest run",
     "preview": "astro preview",
     "astro": "astro",
     "import": "node scripts/import-notion.mjs",
@@ -30,6 +31,7 @@
     "sharp": "^0.34.3"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "vitest": "^4.1.2"
   }
 }

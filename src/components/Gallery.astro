@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { normalizeExt, autoLayout, computeMasterRatio } from '../utils/gallery-utils';
 
 // Eagerly index every image across all posts at build time.
 // Keys are absolute Vite module paths, e.g. /src/content/posts/boo/bauhaus.png
@@ -20,15 +21,6 @@ interface Props {
 
 const { images = [], layout } = Astro.props;
 
-// Normalise extension: lowercase + .jpeg → .jpg
-function normalizeExt(s: string): string {
-	const dot = s.lastIndexOf('.');
-	if (dot === -1) return s;
-	let ext = s.slice(dot).toLowerCase();
-	if (ext === '.jpeg') ext = '.jpg';
-	return s.slice(0, dot) + ext;
-}
-
 // Resolve a relative src string like "./DSCF0359.jpg" to ImageMetadata by
 // matching its normalised basename against the glob index.
 async function resolveImage(src: string): Promise<ImageMetadata | null> {
@@ -44,15 +36,6 @@ async function resolveImage(src: string): Promise<ImageMetadata | null> {
 	return null;
 }
 
-// Auto-detect layout from image count if not specified
-function autoLayout(count: number): string {
-	if (count === 2) return '2x1';
-	if (count === 3) return '3x1';
-	if (count === 4) return '2x2';
-	if (count >= 6 && count <= 9) return '3x3';
-	return '2x1';
-}
-
 const resolvedLayout = layout ?? autoLayout(images.length);
 const cols = resolvedLayout.startsWith('3') ? 3 : 2;
 
@@ -66,10 +49,7 @@ const resolvedImages = await Promise.all(
 
 // Derive Master Ratio from the first resolved image.
 // Fallback to 1:1 if no valid image is present.
-const firstResolved = resolvedImages.find((img) => img.resolved)?.resolved;
-const masterRatio = firstResolved
-	? firstResolved.width / firstResolved.height
-	: 1;
+const masterRatio = computeMasterRatio(resolvedImages);
 
 // Target output width for Astro image optimisation.
 // Height is derived from the master ratio so the source is pre-cropped correctly.
@@ -92,9 +72,7 @@ const outputHeight = Math.round(OUTPUT_WIDTH / masterRatio);
 						height={outputHeight}
 						loading="lazy"
 					/>
-				: img.src
-					? <div class="gallery-placeholder" title={`Missing: ${img.src}`} />
-					: null
+				: <div class="gallery-placeholder" title={img.src ? `Missing: ${img.src}` : 'Empty slot'} />
 			}
 			{img.caption && <figcaption>{img.caption}</figcaption>}
 		</div>
