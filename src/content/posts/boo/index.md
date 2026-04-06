@@ -1,0 +1,12 @@
+---
+title: boo
+description: skd
+pubDate: 2026-04-06
+coverImage: ./coverImage.jpg
+tags: []
+draft: false
+author: me
+---
+{% gallery
+   images=[{src: "./bauhaus.png"}, {src: "./bauhaus3.jpeg"}]
+   layout="auto" /%}

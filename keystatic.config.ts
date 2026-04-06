@@ -33,7 +33,7 @@ export default config({
 				}),
 				coverImage: fields.image({
 					label: 'Cover image',
-					directory: 'src/content/posts/{slug}',
+					directory: 'src/content/posts',
 					publicPath: './',
 				}),
 				tags: fields.array(
@@ -56,7 +56,7 @@ export default config({
 						divider: true,
 						link: true,
 						image: {
-							directory: 'src/content/posts/{slug}',
+							directory: 'src/content/posts',
 							publicPath: './',
 						},
 					},
@@ -68,7 +68,7 @@ export default config({
 									fields.object({
 										src: fields.image({
 											label: 'Image',
-											directory: 'src/content/posts/{slug}',
+											directory: 'src/content/posts',
 											publicPath: './',
 										}),
 										alt: fields.text({ label: 'Alt text', defaultValue: '' }),
@@ -98,7 +98,7 @@ export default config({
 							schema: {
 								src: fields.image({
 									label: 'Image',
-									directory: 'src/content/posts/{slug}',
+									directory: 'src/content/posts',
 									publicPath: './',
 								}),
 								alt: fields.text({ label: 'Alt text', defaultValue: '' }),
