@@ -7,7 +7,7 @@
     "npm": ">=10.5.0"
   },
   "scripts": {
-    "dev": "concurrently -n norm,astro -c cyan,blue --kill-others-on-fail \"node scripts/normalize-assets.mjs --watch\" \"astro dev\"",
+    "dev": "node scripts/sanitize-quotes.mjs && concurrently -n norm,astro -c cyan,blue --kill-others-on-fail \"node scripts/normalize-assets.mjs --watch\" \"astro dev\"",
     "prebuild": "node scripts/sanitize-quotes.mjs && node scripts/normalize-assets.mjs",
     "build": "rm -rf .astro && astro sync && astro build",
     "test": "vitest run",
