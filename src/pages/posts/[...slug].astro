@@ -2,9 +2,16 @@
 export const prerender = true;
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
+import Gallery from '../../components/Gallery.astro';
+import Image70 from '../../components/Image70.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('posts');
+	let posts: CollectionEntry<'posts'>[] = [];
+	try {
+		posts = await getCollection('posts');
+	} catch (err) {
+		console.error('[slug].astro getStaticPaths: getCollection failed', err);
+	}
 	return posts
 		.filter((post) => !post.data.draft)
 		.map((post) => ({
@@ -16,7 +23,10 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'posts'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content } = await render(post).catch((err) => {
+	console.error(`[slug].astro render failed for "${post.id}":`, err);
+	throw err;
+});
 
 // Estimate reading time from word count (~200 wpm)
 const wordCount = post.body?.split(/\s+/).length ?? 0;
@@ -24,5 +34,5 @@ const readingTime = Math.max(1, Math.round(wordCount / 200));
 ---
 
 <PostLayout {...post.data} readingTime={readingTime} author={post.data.author}>
-	<Content />
+	<Content components={{ gallery: Gallery, image70: Image70 }} />
 </PostLayout>
