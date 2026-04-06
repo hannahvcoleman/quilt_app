@@ -38,4 +38,41 @@ test.describe('Gallery post — /posts/gallery-test', () => {
 			expect(src).toMatch(/^\/_astro\/|^\/_image\?/);
 		}
 	});
+
+	test('Test 4: 2×1 and 3×3 galleries share the same fixed height (within 5px)', async ({ page }) => {
+		await page.goto('/posts/gallery-test');
+
+		const h2x1 = await page.locator('.gallery[data-layout="2x1"]').evaluate(el => el.getBoundingClientRect().height);
+		const h3x3 = await page.locator('.gallery[data-layout="3x3"]').evaluate(el => el.getBoundingClientRect().height);
+
+		expect(Math.abs(h2x1 - h3x3)).toBeLessThanOrEqual(5);
+	});
+
+	test('Test 5: every .gallery-item is visible with non-zero dimensions', async ({ page }) => {
+		await page.goto('/posts/gallery-test');
+
+		const items = page.locator('.gallery-item');
+		const count = await items.count();
+		expect(count).toBeGreaterThan(0);
+
+		for (let i = 0; i < count; i++) {
+			await expect(items.nth(i)).toBeVisible();
+			const box = await items.nth(i).boundingBox();
+			expect(box!.width).toBeGreaterThan(0);
+			expect(box!.height).toBeGreaterThan(0);
+		}
+	});
+
+	test('Test 6: gallery images have object-fit: cover in computed styles', async ({ page }) => {
+		await page.goto('/posts/gallery-test');
+
+		const imgs = page.locator('.gallery img');
+		const count = await imgs.count();
+		expect(count).toBeGreaterThan(0);
+
+		for (let i = 0; i < count; i++) {
+			const objectFit = await imgs.nth(i).evaluate(el => window.getComputedStyle(el).objectFit);
+			expect(objectFit).toBe('cover');
+		}
+	});
 });
