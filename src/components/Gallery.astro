@@ -1,18 +1,53 @@
 ---
 import { Image } from 'astro:assets';
 
-interface Image {
-	src: string;
+// Eagerly index every image across all posts at build time.
+// Keys are absolute Vite module paths, e.g. /src/content/posts/boo/bauhaus.png
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+	'/src/content/posts/**/*.{jpg,jpeg,png,webp,gif,avif,JPG,JPEG,PNG,WEBP}'
+);
+
+interface GalleryImage {
+	src?: string;
 	alt?: string;
 	caption?: string;
 }
 
 interface Props {
-	images: Image[];
+	images: GalleryImage[];
 	layout?: '2x1' | '3x1' | '2x2' | '3x3';
 }
 
 const { images = [], layout } = Astro.props;
+
+// Normalise extension: lowercase + .jpeg → .jpg
+function normalizeExt(s: string): string {
+	const dot = s.lastIndexOf('.');
+	if (dot === -1) return s;
+	let ext = s.slice(dot).toLowerCase();
+	if (ext === '.jpeg') ext = '.jpg';
+	return s.slice(0, dot) + ext;
+}
+
+// Resolve a relative src string like "./DSCF0359.jpg" to ImageMetadata by
+// matching its normalised basename against the glob index.
+async function resolveImage(src: string): Promise<ImageMetadata | null> {
+	// Normalise: lowercase ext, .jpeg → .jpg, strip leading ./
+	const normalised = normalizeExt(src).replace(/^\.\//, '');
+
+	// Search glob keys for a path ending with /<normalised filename>
+	const key = Object.keys(allImages).find((k) =>
+		normalizeExt(k).endsWith('/' + normalised)
+	);
+
+	if (key) {
+		const mod = await allImages[key]();
+		return mod.default;
+	}
+
+	console.warn(`[Gallery] could not resolve image: "${src}"`);
+	return null;
+}
 
 // Auto-detect layout from image count if not specified
 function autoLayout(count: number): string {
@@ -24,25 +59,26 @@ function autoLayout(count: number): string {
 }
 
 const resolvedLayout = layout ?? autoLayout(images.length);
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-function resolveUrl(src: string) {
-	if (src.startsWith('http')) return src;
-	if (src.startsWith('./') || src.startsWith('../')) return src;
-	return `${base}${src.startsWith('/') ? src : '/' + src}`;
-}
-
 const cols = resolvedLayout.startsWith('3') ? 3 : 2;
+
+// Resolve all images in parallel before rendering
+const resolvedImages = await Promise.all(
+	images.map(async (img) => ({
+		...img,
+		resolved: img.src ? await resolveImage(img.src) : null,
+	}))
+);
 ---
 
 <figure class="gallery" data-layout={resolvedLayout} style={`--cols: ${cols}`}>
-	{images.map((img) => (
+	{resolvedImages.map((img) => (
 		<div class="gallery-item">
-			{img.src.startsWith('http') || img.src.startsWith('./') || img.src.startsWith('../') ? (
-				<img src={resolveUrl(img.src)} alt={img.alt ?? ''} loading="lazy" />
-			) : (
-				<img src={resolveUrl(img.src)} alt={img.alt ?? ''} loading="lazy" />
-			)}
+			{img.resolved
+				? <Image src={img.resolved} alt={img.alt ?? ''} loading="lazy" />
+				: img.src
+					? <div class="gallery-placeholder" title={`Missing: ${img.src}`} />
+					: null
+			}
 			{img.caption && <figcaption>{img.caption}</figcaption>}
 		</div>
 	))}
@@ -74,6 +110,12 @@ const cols = resolvedLayout.startsWith('3') ? 3 : 2;
 		display: block;
 		box-shadow: none;
 		margin: 0;
+	}
+
+	.gallery-placeholder {
+		width: 100%;
+		height: 100%;
+		background: var(--color-border);
 	}
 
 	figcaption {
