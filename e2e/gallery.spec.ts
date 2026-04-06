@@ -1,6 +1,18 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Gallery post — /posts/gallery-test', () => {
+	test('Test 3: 2×1 gallery grid renders with correct layout and item count', async ({ page }) => {
+		await page.goto('/posts/gallery-test');
+
+		// The 2×1 gallery must be present — this fails if the tag renders as raw text
+		const gallery2x1 = page.locator('.gallery[data-layout="2x1"]');
+		await expect(gallery2x1).toBeVisible();
+
+		// Must contain exactly 2 .gallery-item children
+		const items = gallery2x1.locator('.gallery-item');
+		await expect(items).toHaveCount(2);
+	});
+
 	test('Test 1: no raw Markdoc text and .gallery element exists', async ({ page }) => {
 		await page.goto('/posts/gallery-test');
 
