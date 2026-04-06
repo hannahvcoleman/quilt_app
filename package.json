@@ -11,6 +11,7 @@
     "prebuild": "node scripts/sanitize-quotes.mjs && node scripts/normalize-assets.mjs",
     "build": "rm -rf .astro && astro sync && astro build",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "preview": "astro preview",
     "astro": "astro",
     "import": "node scripts/import-notion.mjs",
@@ -31,6 +32,7 @@
     "sharp": "^0.34.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "concurrently": "^9.2.1",
     "vitest": "^4.1.2"
   }
