@@ -32,19 +32,14 @@ function normalizeExt(s: string): string {
 // Resolve a relative src string like "./DSCF0359.jpg" to ImageMetadata by
 // matching its normalised basename against the glob index.
 async function resolveImage(src: string): Promise<ImageMetadata | null> {
-	// Normalise: lowercase ext, .jpeg → .jpg, strip leading ./
 	const normalised = normalizeExt(src).replace(/^\.\//, '');
-
-	// Search glob keys for a path ending with /<normalised filename>
 	const key = Object.keys(allImages).find((k) =>
 		normalizeExt(k).endsWith('/' + normalised)
 	);
-
 	if (key) {
 		const mod = await allImages[key]();
 		return mod.default;
 	}
-
 	console.warn(`[Gallery] could not resolve image: "${src}"`);
 	return null;
 }
@@ -68,13 +63,35 @@ const resolvedImages = await Promise.all(
 		resolved: img.src ? await resolveImage(img.src) : null,
 	}))
 );
+
+// Derive Master Ratio from the first resolved image.
+// Fallback to 1:1 if no valid image is present.
+const firstResolved = resolvedImages.find((img) => img.resolved)?.resolved;
+const masterRatio = firstResolved
+	? firstResolved.width / firstResolved.height
+	: 1;
+
+// Target output width for Astro image optimisation.
+// Height is derived from the master ratio so the source is pre-cropped correctly.
+const OUTPUT_WIDTH = 800;
+const outputHeight = Math.round(OUTPUT_WIDTH / masterRatio);
 ---
 
-<figure class="gallery" data-layout={resolvedLayout} style={`--cols: ${cols}`}>
+<figure
+	class="gallery"
+	data-layout={resolvedLayout}
+	style={`--cols: ${cols}; --ratio: ${masterRatio}`}
+>
 	{resolvedImages.map((img) => (
 		<div class="gallery-item">
 			{img.resolved
-				? <Image src={img.resolved} alt={img.alt ?? ''} loading="lazy" />
+				? <Image
+						src={img.resolved}
+						alt={img.alt ?? ''}
+						width={OUTPUT_WIDTH}
+						height={outputHeight}
+						loading="lazy"
+					/>
 				: img.src
 					? <div class="gallery-placeholder" title={`Missing: ${img.src}`} />
 					: null
@@ -98,7 +115,7 @@ const resolvedImages = await Promise.all(
 	.gallery-item {
 		overflow: hidden;
 		border-radius: 4px;
-		aspect-ratio: 3 / 2;
+		aspect-ratio: var(--ratio);
 		background: var(--color-border);
 	}
 
@@ -106,6 +123,7 @@ const resolvedImages = await Promise.all(
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: center;
 		border-radius: 0;
 		display: block;
 		box-shadow: none;
