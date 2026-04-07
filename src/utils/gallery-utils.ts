@@ -8,6 +8,7 @@ export function normalizeExt(s: string): string {
 	if (dot === -1) return s;
 	let ext = s.slice(dot).toLowerCase();
 	if (ext === '.jpeg') ext = '.jpg';
+	if (ext === '.heic') ext = '.jpg'; // HEIC files are converted to JPEG at prebuild
 	return s.slice(0, dot) + ext;
 }
 
