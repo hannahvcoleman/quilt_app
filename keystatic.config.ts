@@ -8,6 +8,7 @@ export default config({
 			: {
 					kind: 'github',
 					repo: 'hannahvcoleman/quilt_app',
+					branch: 'main',
 			  },
 	ui: {
 		brand: { name: 'Quillt' },
