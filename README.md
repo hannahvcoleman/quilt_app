@@ -80,7 +80,7 @@ const SUBSCRIBE_URL = "https://script.google.com/macros/s/YOUR_ID/exec";
 
 ---
 
-## Customising the look
+## Customising the site
 
 All design tokens live in `src/styles/global.css` under `:root`:
 
