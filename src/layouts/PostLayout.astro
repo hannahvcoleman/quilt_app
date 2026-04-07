@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { normalizeExt } from '../utils/gallery-utils';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -9,6 +10,31 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 type Props = CollectionEntry<'posts'>['data'] & { readingTime: number };
 
 const { title, description, pubDate, coverImage, readingTime, author } = Astro.props;
+
+// Eagerly index all post images so we can resolve string paths (Keystatic GitHub
+// storage mode may write a relative string instead of a resolved ImageMetadata object).
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+	'/src/content/posts/**/*.{jpg,jpeg,png,webp,gif,avif,JPG,JPEG,PNG,WEBP}'
+);
+
+async function resolveCoverImage(src: string): Promise<ImageMetadata | null> {
+	const normalised = normalizeExt(src).replace(/^\.\//, '');
+	const key = Object.keys(allImages).find((k) =>
+		normalizeExt(k).endsWith('/' + normalised)
+	);
+	if (key) {
+		const mod = await allImages[key]();
+		return mod.default;
+	}
+	console.warn(`[PostLayout] could not resolve coverImage: "${src}"`);
+	return null;
+}
+
+const resolvedCoverImage: ImageMetadata | null = coverImage
+	? typeof coverImage === 'string'
+		? await resolveCoverImage(coverImage)
+		: (coverImage as ImageMetadata)
+	: null;
 
 const formattedDate = pubDate.toLocaleDateString('en-US', {
 	year: 'numeric',
@@ -19,15 +45,15 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image={coverImage} />
+		<BaseHead title={title} description={description} image={resolvedCoverImage ?? undefined} />
 	</head>
 	<body>
 		<Header />
 
 		<!-- Hero image: 95vw, full-bleed feel, outside the article container -->
-		{coverImage && (
+		{resolvedCoverImage && (
 			<div class="cover-image">
-				<Image src={coverImage} alt={title} loading="eager" />
+				<Image src={resolvedCoverImage} alt={title} loading="eager" />
 			</div>
 		)}
 

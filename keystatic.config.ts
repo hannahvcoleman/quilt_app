@@ -8,7 +8,7 @@ export default config({
 			: {
 					kind: 'github',
 					repo: 'hannahvcoleman/quilt_app',
-					branch: 'main',
+					branch: process.env.VERCEL_GIT_COMMIT_REF || 'main',
 			  },
 	ui: {
 		brand: { name: 'Quillt' },

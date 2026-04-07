@@ -123,13 +123,7 @@ const outputHeight = Math.round(OUTPUT_WIDTH / masterRatio);
 		text-align: center;
 	}
 
-	/* Desktop: fixed 360px editorial grid — all layouts share identical height */
 	@media (min-width: 769px) {
-		.gallery {
-			height: 360px;
-			grid-template-rows: repeat(var(--rows), 1fr);
-		}
-
 		.gallery-item {
 			aspect-ratio: unset;
 		}
